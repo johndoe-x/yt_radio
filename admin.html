@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT-7000 Radio Studio | Station Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="admin-topbar">
+    <div class="topbar-brand">
+      <span class="brand-badge">YT-7000</span>
+      <span class="brand-name">BROADCAST STUDIO ADMIN</span>
+    </div>
+    <div class="topbar-actions">
+      <a href="/" target="_blank" class="nav-link-btn" title="Open Public Radio Player">
+        <span>📻 OPEN RADIO PLAYER ↗</span>
+      </a>
+      <button id="btn-logout" class="nav-link-btn logout-btn hidden">LOGOUT</button>
+    </div>
+  </header>
+
+  <main class="admin-container">
+    <!-- 1. Password Login View (When Not Authenticated) -->
+    <section id="login-view" class="admin-card login-card">
+      <div class="card-header">
+        <h2>DJ BOOTH SECURITY CLEARANCE</h2>
+        <span class="status-pill locked">LOCKED</span>
+      </div>
+      <div class="card-body">
+        <p class="login-desc">Enter the station admin password to access live broadcast controls and playlist management:</p>
+        <div class="form-group">
+          <label class="form-label">ADMIN PASSWORD</label>
+          <input id="input-password" class="form-input" type="password" placeholder="Enter password (default: admin)" autofocus>
+        </div>
+        <div id="login-error" class="error-banner hidden"></div>
+        <button id="btn-login" class="primary-btn">
+          <span>&#128274;</span> UNLOCK BROADCAST STUDIO
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. Admin Broadcast Dashboard (When Authenticated) -->
+    <div id="dashboard-view" class="dashboard-grid hidden">
+      <!-- Left Column: Master Playback & Live Monitor -->
+      <section class="admin-card">
+        <div class="card-header">
+          <h2>MASTER BROADCAST TRANSMITTER</h2>
+          <span id="transmitter-pill" class="status-pill on-air">ON AIR</span>
+        </div>
+        <div class="card-body">
+          <!-- Monitor Display -->
+          <div class="station-monitor">
+            <div class="monitor-vfd">
+              <div class="vfd-row">
+                <span id="vfd-status">STATUS: STANDBY</span>
+                <span>PEERS: <b id="stat-listeners">1</b></span>
+              </div>
+              <div class="vfd-row main-track">
+                <span id="vfd-title">HOME - Resonance</span>
+                <span id="vfd-time">00:00 / 03:32</span>
+              </div>
+            </div>
+            
+            <!-- Video Monitor Frame -->
+            <div class="monitor-video-frame">
+              <div id="admin-player-container"></div>
+            </div>
+          </div>
+
+          <!-- Master Control Buttons -->
+          <div class="master-controls">
+            <button id="btn-master-play" class="control-btn play-btn" title="Start Station Broadcast">
+              <span>▶</span> PLAY
+            </button>
+            <button id="btn-master-pause" class="control-btn" title="Pause Station">
+              <span>❚❚</span> PAUSE
+            </button>
+            <button id="btn-master-stop" class="control-btn" title="Stop Station">
+              <span>■</span> STOP
+            </button>
+            <button id="btn-master-sync" class="control-btn sync-btn" title="Force Sync All Listeners">
+              <span>⚡</span> FORCE SYNC ALL
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Playlist & Mixtape Management -->
+      <section class="admin-card">
+        <div class="card-header">
+          <h2>PLAYLIST & QUEUE MANAGEMENT</h2>
+          <span class="track-count-badge"><span id="stat-total-tracks">0</span> TRACKS</span>
+        </div>
+        <div class="card-body">
+          <!-- Tabs for Add Single vs Import -->
+          <div class="studio-tabs">
+            <button id="tab-add" class="tab-btn active" data-tab="pane-add">+ ADD SONG</button>
+            <button id="tab-import" class="tab-btn" data-tab="pane-import">≡ BATCH IMPORT</button>
+          </div>
+
+          <!-- Add Single Song Form -->
+          <div id="pane-add" class="tab-content">
+            <div class="form-group">
+              <label class="form-label">YOUTUBE URL OR VIDEO ID</label>
+              <div class="input-with-btn">
+                <input id="input-yt-url" class="form-input" type="text" placeholder="https://www.youtube.com/watch?v=... or ID">
+                <button id="btn-fetch-info" class="secondary-btn">FETCH INFO</button>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label class="form-label">SONG TITLE</label>
+                <input id="input-song-title" class="form-input" type="text" placeholder="Track Title">
+              </div>
+              <div class="form-group flex-1">
+                <label class="form-label">DURATION (MM:SS)</label>
+                <input id="input-song-duration" class="form-input" type="text" placeholder="3:30" value="3:30">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ARTIST / CHANNEL</label>
+              <input id="input-song-artist" class="form-input" type="text" placeholder="Artist Name">
+            </div>
+            <button id="btn-add-song" class="primary-btn">
+              <span>+</span> ADD TO BROADCAST QUEUE
+            </button>
+            <div id="add-feedback" class="feedback-banner hidden"></div>
+          </div>
+
+          <!-- Batch Import Form -->
+          <div id="pane-import" class="tab-content hidden">
+            <div class="form-group">
+              <label class="form-label">PASTE YOUTUBE URLS (ONE PER LINE) OR JSON ARRAY</label>
+              <textarea id="input-batch" class="form-textarea" placeholder="https://www.youtube.com/watch?v=8GW6sLrK40k
+https://www.youtube.com/watch?v=MV_3Dpw-BRY"></textarea>
+            </div>
+            <button id="btn-import-batch" class="primary-btn">
+              <span>📥</span> IMPORT PLAYLIST
+            </button>
+            <div id="import-feedback" class="feedback-banner hidden"></div>
+          </div>
+
+          <!-- Current Station Queue -->
+          <div class="queue-section">
+            <div class="queue-header">
+              <h3>ACTIVE STATION ROTATION</h3>
+            </div>
+            <div id="admin-queue-list" class="queue-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

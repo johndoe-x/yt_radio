@@ -1,0 +1,1324 @@
+/* ==========================================================================
+   yt_radio - Vintage Skeuomorphic Cassette Player Styles
+   ========================================================================== */
+
+:root {
+  --deck-bg: #1c1e22;
+  --deck-faceplate: #282c34;
+  --deck-border: #141619;
+  --metal-highlight: #4a505e;
+  --metal-dark: #121417;
+  --accent-amber: #ffaa22;
+  --accent-red: #ff3333;
+  --accent-cyan: #00f0ff;
+  --accent-vfd: #2bfce8;
+  --tape-label-bg: #f2ebd9;
+  --tape-shell: #18181a;
+  --font-tech: 'Courier New', Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  background: radial-gradient(circle at center, #1e2026 0%, #0d0e12 100%);
+  color: #d1d5db;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 16px 80px;
+  overflow-x: hidden;
+}
+
+/* Background Atmosphere */
+.retro-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Main Container */
+.player-container {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+}
+
+/* ==========================================================================
+   Cassette Deck Chassis
+   ========================================================================== */
+.cassette-deck {
+  width: 100%;
+  background: linear-gradient(180deg, #363b45 0%, #252830 25%, #1d2026 100%);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 0 2px #434955,
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.6);
+  position: relative;
+  border: 1px solid #111317;
+}
+
+/* Corner Screws */
+.screw {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, #8a92a3 30%, #444a56 90%);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 1px #fff, 0 1px 2px #000;
+}
+.screw::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  width: 70%;
+  height: 2px;
+  background: #252830;
+  transform: translateY(-50%) rotate(42deg);
+}
+.screw.top-left { top: 12px; left: 12px; }
+.screw.top-right { top: 12px; right: 12px; }
+.screw.bottom-left { bottom: 12px; left: 12px; }
+.screw.bottom-right { bottom: 12px; right: 12px; }
+
+/* Deck Header */
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #1a1c22;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.brand-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #e5e9f0;
+  text-shadow: 0 1px 2px #000;
+}
+
+.brand-sub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #8b94a5;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.deck-badges {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 3px 7px;
+  border: 1px solid #4a5260;
+  border-radius: 3px;
+  color: #a4adbd;
+  background: #191b20;
+}
+
+.badge.dolby {
+  font-family: serif;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Meters & VFD Display Section
+   ========================================================================== */
+.deck-dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* Analog VU Meters */
+.vu-meters-panel {
+  background: #14161a;
+  border: 2px solid #101114;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: inset 0 3px 8px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vu-meters-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #717b8c;
+}
+
+.vu-meters-pair {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.vu-meter {
+  position: relative;
+  width: 140px;
+  height: 75px;
+  background: radial-gradient(ellipse at 50% 120%, #ffd066 0%, #c48b26 65%, #6a480d 100%);
+  border-radius: 6px 6px 0 0;
+  border: 2px solid #23272e;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 0 12px rgba(255, 170, 34, 0.2);
+}
+
+.vu-meter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+  border-radius: 4px 4px 0 0;
+  pointer-events: none;
+}
+
+/* VU Scale Dial */
+.vu-scale {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 7px;
+  font-weight: 900;
+  color: #1a1608;
+}
+
+.vu-scale .red-zone {
+  color: #c90000;
+}
+
+.vu-needle {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 1.5px;
+  height: 62px;
+  background: #0f1012;
+  transform-origin: bottom center;
+  transform: rotate(-45deg);
+  transition: transform 0.04s ease-out;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+.vu-needle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  background: #111;
+  border-radius: 50%;
+}
+
+.vu-channel-tag {
+  position: absolute;
+  bottom: 4px;
+  left: 8px;
+  font-size: 8px;
+  font-weight: 900;
+  color: #42300b;
+}
+
+/* Mechanical Tape Counter & Indicators */
+.aux-meters-panel {
+  background: #14161a;
+  border: 2px solid #101114;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: inset 0 3px 8px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.counter-and-indicators {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 3-Digit Mechanical Counter */
+.tape-counter-unit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1d24;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #2d323d;
+}
+
+.counter-window {
+  display: flex;
+  gap: 3px;
+  background: #0a0b0e;
+  padding: 4px 6px;
+  border-radius: 3px;
+  box-shadow: inset 0 2px 5px #000;
+  border: 1px solid #1f2229;
+}
+
+.counter-digit {
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  color: #f0f0f0;
+  background: #18191d;
+  padding: 1px 4px;
+  border-radius: 2px;
+  line-height: 1;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), inset 0 -1px 2px #000;
+}
+
+.counter-reset-btn {
+  background: #333842;
+  color: #fff;
+  border: 1px solid #505766;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px #000;
+}
+.counter-reset-btn:active {
+  transform: translateY(1px);
+}
+
+/* LED Indicators */
+.led-indicators {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.led-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #7b8596;
+}
+
+.led {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #331111;
+  border: 1px solid #220000;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
+}
+
+.led.red.active {
+  background: #ff2222;
+  box-shadow: 0 0 8px #ff3333, inset 0 1px 2px #fff;
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.led.green.active {
+  background: #00ff66;
+  box-shadow: 0 0 8px #00ff66, inset 0 1px 2px #fff;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* VFD Track Readout Display */
+.vfd-display {
+  background: #050e0f;
+  border: 1px solid #133433;
+  border-radius: 4px;
+  padding: 8px 10px;
+  box-shadow: inset 0 2px 6px #000, 0 0 8px rgba(43, 252, 232, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vfd-line-top {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-tech);
+  font-size: 10px;
+  color: var(--accent-vfd);
+  text-shadow: 0 0 5px rgba(43, 252, 232, 0.6);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.vfd-line-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--accent-vfd);
+  text-shadow: 0 0 6px rgba(43, 252, 232, 0.8);
+}
+
+/* ==========================================================================
+   Cassette Tape Compartment & Window
+   ========================================================================== */
+.cassette-compartment {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  background: #111317;
+  border-radius: 8px;
+  border: 3px solid #1e2129;
+  box-shadow: inset 0 5px 15px #000, 0 2px 4px rgba(255,255,255,0.05);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+/* Clear Acrylic Tape Door Reflection */
+.cassette-compartment::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 40%, rgba(0,0,0,0) 60%);
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* Cassette Tape Viewport */
+.tape-viewport {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+.tape-viewport.hidden {
+  display: none;
+}
+
+/* Authentic Cassette Tape Shell */
+.cassette-tape {
+  width: 460px;
+  height: 240px;
+  background: linear-gradient(180deg, #1c1d21 0%, #121316 100%);
+  border-radius: 12px;
+  border: 2px solid #2e323b;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Cassette Paper Sticker Label */
+.tape-sticker {
+  width: 90%;
+  height: 175px;
+  margin-top: 14px;
+  background: linear-gradient(180deg, #fff9e6 0%, #eee1ba 85%, #d9c898 100%);
+  border-radius: 8px;
+  border: 1px solid #8c7e5a;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 14px;
+}
+
+.sticker-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #b83526;
+  padding-bottom: 4px;
+}
+
+.tape-brand-name {
+  font-family: 'Impact', sans-serif;
+  font-size: 16px;
+  color: #1a1815;
+  letter-spacing: 1px;
+}
+
+.tape-type-tag {
+  font-size: 8px;
+  font-weight: 900;
+  color: #fff;
+  background: #1a1815;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.tape-title-bar {
+  width: 100%;
+  margin-top: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  font-weight: bold;
+  color: #2b2211;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Central Cassette Window */
+.tape-window {
+  width: 250px;
+  height: 80px;
+  background: rgba(14, 15, 18, 0.85);
+  border-radius: 6px;
+  border: 2px solid #4a3e2a;
+  box-shadow: inset 0 3px 8px #000;
+  margin-top: 8px;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 15px;
+}
+
+/* Spool / Reel Assemblies */
+.spool-assembly {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tape Pack Roll (Winding size) */
+.tape-pack {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #382012 50%, #201209 85%, #150b06 100%);
+  box-shadow: inset 0 0 4px #000, 0 0 3px rgba(0,0,0,0.8);
+  transition: transform 0.5s ease-out;
+  transform: scale(0.85);
+}
+
+/* Toothed Center Hub */
+.spool-hub {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  z-index: 5;
+}
+
+/* 6-Tooth Sprocket Teeth */
+.spool-hub::before,
+.spool-hub::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 6px;
+  background: #d8d8d8;
+  transform: translate(-50%, -50%);
+}
+.spool-hub::after {
+  transform: translate(-50%, -50%) rotate(60deg);
+}
+
+.spool-hub.spinning {
+  animation: reel-rotation 3.2s linear infinite;
+}
+
+@keyframes reel-rotation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Cassette Bottom Guide Trapeze */
+.tape-bottom-trapeze {
+  position: absolute;
+  bottom: 0;
+  width: 290px;
+  height: 28px;
+  background: #111215;
+  border-top: 1px solid #333842;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.magnetic-head-notch {
+  width: 38px;
+  height: 14px;
+  background: #474b54;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px #fff, 0 1px 3px #000;
+}
+
+.guide-roller {
+  width: 10px;
+  height: 10px;
+  background: #737c8c;
+  border-radius: 50%;
+  border: 1px solid #222;
+}
+
+/* ==========================================================================
+   Retro CRT Video Screen Viewport
+   ========================================================================== */
+.crt-viewport {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #020305;
+  overflow: hidden;
+}
+.crt-viewport.hidden {
+  display: none;
+}
+
+/* Curved CRT Bezel */
+.crt-screen-frame {
+  width: 95%;
+  height: 92%;
+  position: relative;
+  border-radius: 18px;
+  border: 4px solid #21242c;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 0 0 15px rgba(0,0,0,0.8);
+  overflow: hidden;
+  background: #000;
+}
+
+/* Actual YouTube IFrame Wrapper */
+.yt-iframe-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.yt-iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* CRT Scanlines Overlay */
+.crt-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.crt-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-family: var(--font-tech);
+  font-size: 9px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px 6px;
+  border-radius: 3px;
+  z-index: 12;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Mechanical Buttons & Control Panel
+   ========================================================================== */
+.deck-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(180deg, #1f2229 0%, #15171d 100%);
+  padding: 16px 20px;
+  border-radius: 8px;
+  border: 2px solid #282c35;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.05), 0 3px 6px #000;
+}
+
+/* Mechanical Push Buttons Group */
+.buttons-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.mech-btn {
+  background: linear-gradient(180deg, #535a68 0%, #3a3f4a 45%, #2a2e37 100%);
+  color: #f1f3f7;
+  border: 1px solid #202329;
+  border-radius: 4px;
+  padding: 12px 18px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 0 #131519,
+    0 5px 6px rgba(0,0,0,0.6),
+    inset 0 1px 1px rgba(255,255,255,0.4);
+  transition: all 0.08s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mech-btn:hover {
+  background: linear-gradient(180deg, #5f6777 0%, #434956 45%, #30353f 100%);
+}
+
+.mech-btn:active,
+.mech-btn.active {
+  transform: translateY(3px);
+  box-shadow: 
+    0 1px 0 #131519,
+    0 2px 3px rgba(0,0,0,0.8),
+    inset 0 2px 4px rgba(0,0,0,0.6);
+  background: linear-gradient(180deg, #2a2e37 0%, #1c1f26 100%);
+  color: #38bdf8;
+  border-color: #101216;
+}
+
+.mech-btn.play-btn.active {
+  color: #34d399;
+}
+
+.mech-btn.view-toggle {
+  background: linear-gradient(180deg, #44474f 0%, #30333a 100%);
+  font-size: 10px;
+}
+
+/* Rotary Volume Section */
+.knob-control-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.knob-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.knob-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #8b94a5;
+}
+
+.rotary-knob {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #5b6373 0%, #2f343e 70%, #1e2229 100%);
+  border: 2px solid #16181d;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.4);
+  position: relative;
+  transform: rotate(81deg); /* 80% volume default */
+  transition: transform 0.05s ease-out;
+}
+
+.rotary-knob::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  width: 3px;
+  height: 10px;
+  background: #ffffff;
+  border-radius: 1px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 3px rgba(255,255,255,0.8);
+}
+
+.volume-slider-input {
+  width: 75px;
+  accent-color: #38bdf8;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Deck Footer & YouTube Session Info
+   ========================================================================== */
+.deck-footer {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #7b8596;
+}
+
+.account-session-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #14161b;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #232730;
+}
+
+.yt-logo-icon {
+  color: #ff3333;
+  font-size: 13px;
+}
+
+.yt-link {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+}
+.yt-link:hover {
+  text-decoration: underline;
+}
+
+/* Banner prompt for first user click */
+.tune-in-banner {
+  background: rgba(255, 170, 34, 0.15);
+  border: 1px dashed var(--accent-amber);
+  color: #ffd066;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  animation: pulse-border 2s infinite ease-in-out;
+}
+.tune-in-banner:hover {
+  background: rgba(255, 170, 34, 0.25);
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(255, 170, 34, 0.8); }
+  50% { border-color: rgba(255, 170, 34, 0.2); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 680px) {
+  .cassette-deck {
+    padding: 16px;
+  }
+  .deck-dashboard {
+    grid-template-columns: 1fr;
+  }
+  .cassette-tape {
+    width: 320px;
+    height: 190px;
+  }
+  .tape-sticker {
+    height: 135px;
+  }
+  .tape-window {
+    width: 180px;
+    height: 60px;
+  }
+  .spool-assembly {
+    width: 44px;
+    height: 44px;
+  }
+  .tape-pack {
+    width: 42px;
+    height: 42px;
+  }
+  .spool-hub {
+    width: 24px;
+    height: 24px;
+  }
+  .deck-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .buttons-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+
+/* ==========================================================================
+   Mixtape & Playlist Management Modal
+   ========================================================================== */
+.mixtape-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(8, 10, 14, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.mixtape-modal.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.mixtape-panel {
+  width: 92%;
+  max-width: 620px;
+  max-height: 88vh;
+  background: linear-gradient(180deg, #2b2f38 0%, #1e2128 100%);
+  border: 2px solid #434a58;
+  border-radius: 10px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), inset 0 1px 2px rgba(255,255,255,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.mixtape-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #181a20;
+  border-bottom: 2px solid #111317;
+}
+
+.mixtape-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mixtape-title {
+  font-family: 'Impact', sans-serif;
+  font-size: 17px;
+  letter-spacing: 1.5px;
+  color: #ffaa22;
+}
+
+.mixtape-sub {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #8b94a5;
+}
+
+.modal-close-btn {
+  background: #2a2e37;
+  color: #e2e8f0;
+  border: 1px solid #475060;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-close-btn:hover {
+  background: #ff3333;
+  color: #fff;
+  border-color: #cc0000;
+}
+
+.mixtape-tabs {
+  display: flex;
+  background: #15171d;
+  border-bottom: 1px solid #2d3340;
+}
+
+.mixtape-tab-btn {
+  flex: 1;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  color: #8a94a6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.mixtape-tab-btn.active {
+  color: #38bdf8;
+  border-bottom-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.mixtape-body {
+  padding: 18px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tab-pane.hidden {
+  display: none;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-label {
+  font-family: var(--font-tech);
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #a0aec0;
+}
+
+.form-input {
+  background: #101216;
+  border: 1px solid #2d3442;
+  border-radius: 5px;
+  color: #e2e8f0;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  transition: border-color 0.15s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px #38bdf8, inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.form-textarea {
+  min-height: 110px;
+  resize: vertical;
+  font-family: var(--font-tech);
+  font-size: 11px;
+}
+
+.url-input-container {
+  display: flex;
+  gap: 8px;
+}
+
+.fetch-info-btn {
+  background: #2a313d;
+  color: #38bdf8;
+  border: 1px solid #3d4758;
+  border-radius: 5px;
+  padding: 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.fetch-info-btn:hover {
+  background: #363f4e;
+}
+
+.rec-btn {
+  background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 50%, #450a0a 100%);
+  color: #fff;
+  border: 1px solid #b91c1c;
+  border-radius: 5px;
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #330505, 0 4px 6px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.rec-btn:hover {
+  background: linear-gradient(180deg, #b91c1c 0%, #991b1b 50%, #550d0d 100%);
+}
+.rec-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #330505;
+}
+
+.rec-dot {
+  width: 9px;
+  height: 9px;
+  background: #ff3333;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #ff3333;
+}
+
+/* Queue List */
+.queue-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #13161c;
+  border: 1px solid #252b36;
+  border-radius: 5px;
+  padding: 8px 12px;
+  gap: 10px;
+}
+
+.queue-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.queue-index {
+  font-family: var(--font-tech);
+  font-size: 11px;
+  font-weight: 900;
+  color: #7b8596;
+  min-width: 24px;
+}
+
+.queue-details {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.queue-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue-meta {
+  font-size: 10px;
+  color: #8b94a5;
+  display: flex;
+  gap: 8px;
+}
+
+.queue-delete-btn {
+  background: #252a35;
+  color: #ef4444;
+  border: 1px solid #3b4354;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+.queue-delete-btn:hover {
+  background: #dc2626;
+  color: #fff;
+  border-color: #b91c1c;
+}
+
+.status-message {
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 6px;
+  display: none;
+}
+.status-message.success {
+  display: block;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #4ade80;
+}
+.status-message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #f87171;
+}
+
+
+/* ==========================================================================
+   Admin DJ Login Modal & Auth Badge Styles
+   ========================================================================== */
+.dj-auth-badge {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+.dj-auth-badge:hover {
+  background: #282f3c;
+  color: #fff;
+  border-color: #636d80;
+}
+.dj-auth-badge.logged-in {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: #f59e0b;
+  color: #fbbf24;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+}
+
+.dj-login-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(8, 10, 14, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 150;
+  transition: opacity 0.2s ease;
+}
+.dj-login-modal.hidden {
+  display: none;
+}
+
+.dj-login-panel {
+  width: 90%;
+  max-width: 420px;
+  background: linear-gradient(180deg, #282c35 0%, #1a1c22 100%);
+  border: 2px solid #5a4b29;
+  border-radius: 10px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 25px rgba(245, 158, 11, 0.15);
+  overflow: hidden;
+}
+
+.dj-login-header {
+  background: #14161b;
+  padding: 12px 16px;
+  border-bottom: 2px solid #111317;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #fbbf24;
+}
+
+.dj-login-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dj-keypad-graphic {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fbbf24;
+  margin-bottom: 4px;
+}
+
+.dj-login-instruction {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.dj-password-input {
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-align: center;
+}

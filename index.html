@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT-7000 Vintage Cassette Deck | Synchronized Radio</title>
+  <link rel="stylesheet" href="css/cassette.css">
+  <link rel="stylesheet" href="css/admin-section.css">
+</head>
+<body>
+
+  <!-- Retro Scanlines & Vignette Atmosphere -->
+  <div class="retro-background"></div>
+
+  <main class="player-container">
+    <div class="cassette-deck">
+      <!-- 4 Corner Screws for Skeuomorphic Chassis -->
+      <div class="screw top-left"></div>
+      <div class="screw top-right"></div>
+      <div class="screw bottom-left"></div>
+      <div class="screw bottom-right"></div>
+
+      <!-- Deck Header -->
+      <header class="deck-header">
+        <div class="brand-section">
+          <div class="brand-title">YT-7000 HI-FI STEREO</div>
+          <div class="brand-sub">GLOBAL SYNCHRONIZED CASSETTE RADIO</div>
+        </div>
+        <div class="deck-badges">
+          <span class="badge dolby">STEREO HI-FI</span>
+          <span class="badge live-badge">● ON AIR</span>
+        </div>
+      </header>
+
+      <!-- Dashboard: VU Meters, Mechanical Counter, LED Indicators, VFD Display -->
+      <section class="deck-dashboard">
+        <!-- Dual Analog Needle VU Meters -->
+        <div class="vu-meters-panel">
+          <div class="vu-meters-label">
+            <span>PEAK LEVEL METERS</span>
+            <span>-20 to +5 dB</span>
+          </div>
+          <div class="vu-meters-pair">
+            <!-- Left Channel Meter -->
+            <div class="vu-meter">
+              <div class="vu-scale">
+                <span>-20</span><span>-10</span><span>-5</span><span>0</span><span class="red-zone">+3</span><span class="red-zone">+5</span>
+              </div>
+              <div id="needle-left" class="vu-needle"></div>
+              <div class="vu-channel-tag">CH-L</div>
+            </div>
+            <!-- Right Channel Meter -->
+            <div class="vu-meter">
+              <div class="vu-scale">
+                <span>-20</span><span>-10</span><span>-5</span><span>0</span><span class="red-zone">+3</span><span class="red-zone">+5</span>
+              </div>
+              <div id="needle-right" class="vu-needle"></div>
+              <div class="vu-channel-tag">CH-R</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auxiliary Dashboard: 3-Digit Counter, LEDs, VFD Display -->
+        <div class="aux-meters-panel">
+          <div class="counter-and-indicators">
+            <!-- Mechanical Rolling Digit Counter -->
+            <div class="tape-counter-unit">
+              <span style="font-size: 8px; font-weight: 800; color: #7b8596;">INDEX</span>
+              <div class="counter-window">
+                <span id="digit-1" class="counter-digit">0</span>
+                <span id="digit-2" class="counter-digit">0</span>
+                <span id="digit-3" class="counter-digit">0</span>
+              </div>
+              <button id="btn-counter-reset" class="counter-reset-btn" title="Reset Index Counter">R</button>
+            </div>
+
+            <!-- LED Indicators -->
+            <div class="led-indicators">
+              <div class="led-row">
+                <span id="status-led" class="led red active"></span>
+                <span id="status-led-label">LIVE BROADCAST</span>
+              </div>
+              <div class="led-row">
+                <span class="led green active"></span>
+                <span>STEREO</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- VFD Phosphor Digital Display -->
+          <div class="vfd-display">
+            <div class="vfd-line-top">
+              <span id="deck-status-text">TUNED TO LIVE RADIO // SYNC: LOCKED</span>
+              <span>PEERS: <b id="listeners-count" style="color:#fff;">1</b></span>
+            </div>
+            <div class="vfd-line-bottom">
+              <span id="track-title" style="max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">HOME - Resonance</span>
+              <span id="track-time">00:00 / 03:32</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cassette Well Compartment (Toggles between Cassette Reels & CRT Video) -->
+      <section class="cassette-compartment">
+        <!-- 1. Skeuomorphic Cassette Tape View -->
+        <div id="tape-viewport" class="tape-viewport">
+          <div class="cassette-tape">
+            <!-- Vintage Sticker Label -->
+            <div class="tape-sticker">
+              <div class="sticker-header">
+                <span class="tape-brand-name">MAX-AUDIO XL-II</span>
+                <span class="tape-type-tag">HIGH BIAS 70µs EQ</span>
+              </div>
+              <div class="tape-title-bar">
+                <span>SIDE A: </span><span id="sticker-track-title">LIVE SYNCHRONIZED BROADCAST</span>
+              </div>
+              <!-- Tape Window with Reels -->
+              <div class="tape-window">
+                <!-- Left Feed Reel Assembly -->
+                <div class="spool-assembly">
+                  <div id="tape-pack-left" class="tape-pack"></div>
+                  <div id="spool-left" class="spool-hub"></div>
+                </div>
+                <!-- Right Takeup Reel Assembly -->
+                <div class="spool-assembly">
+                  <div id="tape-pack-right" class="tape-pack"></div>
+                  <div id="spool-right" class="spool-hub"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Guide Trapeze & Magnetic Head -->
+            <div class="tape-bottom-trapeze">
+              <div class="guide-roller"></div>
+              <div class="magnetic-head-notch"></div>
+              <div class="guide-roller"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Retro CRT Screen Viewport (YouTube Video Screen) -->
+        <div id="crt-viewport" class="crt-viewport hidden">
+          <div class="crt-screen-frame">
+            <!-- Embedded YouTube Iframe Target Container -->
+            <div id="youtube-player-frame" class="yt-iframe-container"></div>
+            <!-- CRT Scanline Overlay -->
+            <div class="crt-scanlines"></div>
+            <div class="crt-badge">CRT CH-03 // LIVE BROADCAST</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Streamlined Mechanical Controls (User / Listener Focused) -->
+      <section class="deck-controls simplified-controls">
+        <div class="buttons-group">
+          <button id="btn-play" class="mech-btn play-btn primary-tune-btn" title="Tune In / Play">
+            <span>&#9654;</span> <span id="play-btn-text">TUNE IN / ON AIR</span>
+          </button>
+          <button id="btn-view-toggle" class="mech-btn view-toggle" title="Toggle Cassette / CRT Monitor View">
+            CRT SCREEN
+          </button>
+          <button id="btn-sync" class="mech-btn" title="Re-sync to Live DJ">
+            <span>&#8635;</span> RE-SYNC
+          </button>
+        </div>
+
+        <!-- Rotary Master Volume -->
+        <div class="knob-control-section">
+          <div class="knob-wrapper">
+            <span class="knob-label">OUTPUT LEVEL</span>
+            <div id="volume-knob" class="rotary-knob"></div>
+          </div>
+          <input id="volume-slider" class="volume-slider-input" type="range" min="0" max="100" value="80" title="Output Volume">
+        </div>
+      </section>
+
+      <!-- Prompt Banner for Browser Autoplay Gesture -->
+      <div id="tune-in-banner" class="tune-in-banner">
+        <span>&#9835; CLICK HERE OR PRESS <b>TUNE IN</b> TO HEAR LIVE BROADCAST</span>
+      </div>
+
+      <!-- Footer Info -->
+      <footer class="deck-footer">
+        <div class="account-session-badge">
+          <span class="yt-logo-icon">&#9658;</span>
+          <span>Playing through your YouTube session. <a id="yt-external-link" class="yt-link" href="https://youtube.com" target="_blank" rel="noopener">Open in YouTube</a></span>
+        </div>
+        <div class="footer-right">
+          <span id="track-artist" style="font-weight: 600; color: #a4adbd;">Electronic Gems</span>
+          <span style="color: #4b5563; margin: 0 8px;">|</span>
+          <button id="btn-footer-dj" class="footer-dj-btn" title="Open DJ Studio Admin below the player">
+            🎛️ DJ Studio Admin <span id="admin-badge-indicator" class="admin-mini-badge locked">LOCKED</span> ↓
+          </button>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- DJ Studio Admin Section (Directly Below Player) -->
+  <section id="admin-station-section" class="admin-station-section">
+    <!-- Header Bar / Quick Toggle -->
+    <div class="admin-section-header">
+      <div class="admin-section-title">
+        <span class="studio-badge">STUDIO</span>
+        <span class="studio-title">DJ BOOTH & PLAYLIST ADMIN</span>
+        <span id="admin-pill-status" class="status-pill locked">LOCKED</span>
+      </div>
+      <div class="admin-section-actions">
+        <button id="btn-admin-panel-toggle" class="panel-toggle-btn" title="Expand / Collapse Studio">
+          <span id="toggle-arrow">▼</span> <span id="toggle-text">OPEN STUDIO</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Collapsible Studio Panel Body -->
+    <div id="admin-panel-body" class="admin-panel-body collapsed">
+      <!-- 1. Security Clearance Gate (Shown when locked) -->
+      <div id="admin-gate-card" class="studio-card gate-card">
+        <div class="gate-content">
+          <div class="gate-icon">🔐</div>
+          <div class="gate-info">
+            <h3>DJ BOOTH SECURITY CLEARANCE</h3>
+            <p>Enter the station admin password to take control of the broadcast queue and master clock:</p>
+            <div class="gate-form">
+              <input id="input-studio-password" type="password" class="gate-input" placeholder="Password (default: admin)" autocomplete="current-password">
+              <button id="btn-studio-unlock" class="gate-submit-btn">
+                <span>🔓</span> UNLOCK DJ BOOTH
+              </button>
+            </div>
+            <div id="studio-gate-error" class="gate-error hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. DJ Master Studio Console (Shown when unlocked) -->
+      <div id="admin-studio-console" class="studio-card console-card hidden">
+        <!-- Top Action Ribbon -->
+        <div class="studio-console-top">
+          <div class="console-station-status">
+            <span class="station-live-dot">●</span>
+            <span id="console-status-text">MASTER CLOCK BROADCASTING</span>
+            <span class="peer-pill">PEERS: <b id="console-peer-count">1</b></span>
+          </div>
+          <div class="console-top-buttons">
+            <button id="btn-console-force-sync" class="console-action-btn sync-btn" title="Force all connected listeners to sync to this position">
+              <span>⚡</span> FORCE SYNC ALL
+            </button>
+            <button id="btn-console-logout" class="console-action-btn logout-btn" title="Lock DJ Booth">
+              <span>🔒</span> LOGOUT
+            </button>
+          </div>
+        </div>
+
+        <!-- Master Transport Strip -->
+        <div class="studio-transport-strip">
+          <div class="transport-vfd">
+            <div class="vfd-status-row">
+              <span id="transport-track-num">TRACK [1/5]</span>
+              <span id="transport-time-code">00:00 / 03:32</span>
+            </div>
+            <div id="transport-track-name" class="vfd-track-title">HOME - Resonance</div>
+          </div>
+          <div class="transport-buttons">
+            <button id="btn-transport-play" class="transport-btn play-btn" title="Master Broadcast Play">
+              <span>▶</span> BROADCAST
+            </button>
+            <button id="btn-transport-pause" class="transport-btn" title="Master Broadcast Pause">
+              <span>❚❚</span> PAUSE
+            </button>
+            <button id="btn-transport-resync" class="transport-btn" title="Sync Station">
+              <span>↺</span> RE-SYNC
+            </button>
+          </div>
+        </div>
+
+        <!-- Playlist & Rotation Studio -->
+        <div class="studio-playlist-container">
+          <!-- Studio Tabs -->
+          <div class="studio-tabs">
+            <button id="tab-btn-add" class="tab-btn active" data-pane="pane-add-song">+ ADD SINGLE SONG</button>
+            <button id="tab-btn-batch" class="tab-btn" data-pane="pane-batch-import">≡ BATCH PLAYLIST IMPORT</button>
+          </div>
+
+          <!-- Add Single Song Form -->
+          <div id="pane-add-song" class="tab-pane">
+            <div class="form-row">
+              <div class="form-group flex-3">
+                <label>YOUTUBE URL OR 11-CHAR VIDEO ID</label>
+                <div class="input-with-button">
+                  <input id="input-add-url" type="text" class="studio-input" placeholder="https://www.youtube.com/watch?v=... or Video ID">
+                  <button id="btn-auto-fetch" class="studio-btn secondary">FETCH INFO</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label>TRACK TITLE</label>
+                <input id="input-add-title" type="text" class="studio-input" placeholder="Title">
+              </div>
+              <div class="form-group flex-1">
+                <label>ARTIST / CHANNEL</label>
+                <input id="input-add-artist" type="text" class="studio-input" placeholder="Artist">
+              </div>
+              <div class="form-group flex-half">
+                <label>DURATION</label>
+                <input id="input-add-duration" type="text" class="studio-input" placeholder="3:30" value="3:30">
+              </div>
+            </div>
+            <button id="btn-submit-add-track" class="studio-btn primary">
+              <span>+</span> ADD TO BROADCAST ROTATION
+            </button>
+            <div id="add-track-feedback" class="feedback-msg hidden"></div>
+          </div>
+
+          <!-- Batch Import Form -->
+          <div id="pane-batch-import" class="tab-pane hidden">
+            <div class="form-group">
+              <label>PASTE YOUTUBE URLS (ONE PER LINE) OR JSON ARRAY</label>
+              <textarea id="textarea-batch-urls" class="studio-textarea" placeholder="https://www.youtube.com/watch?v=8GW6sLrK40k&#10;https://www.youtube.com/watch?v=MV_3Dpw-BRY"></textarea>
+            </div>
+            <button id="btn-submit-batch-import" class="studio-btn primary">
+              <span>📥</span> IMPORT PLAYLIST
+            </button>
+            <div id="batch-import-feedback" class="feedback-msg hidden"></div>
+          </div>
+
+          <!-- Active Rotation Queue List -->
+          <div class="studio-queue-block">
+            <div class="queue-heading">
+              <h4>ACTIVE STATION ROTATION (<span id="queue-count-badge">0</span> TRACKS)</h4>
+              <span class="queue-subhint">Click "▶ PLAY NOW" to switch the live broadcast immediately</span>
+            </div>
+            <div id="studio-rotation-queue-list" class="rotation-queue-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application Bootstrap -->
+  <script type="module">
+    import { SyncEngine } from './js/sync-engine.js';
+    import { YouTubeRadioPlayer } from './js/player.js';
+    import { CassetteUI } from './js/cassette-ui.js';
+    import { AdminSectionController } from './js/admin-section.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Initialize Sync Engine
+      const syncEngine = new SyncEngine();
+      await syncEngine.init();
+
+      // 2. Initialize YouTube Player
+      const player = new YouTubeRadioPlayer(syncEngine, {
+        containerId: 'youtube-player-frame'
+      });
+      await player.init();
+
+      // 3. Initialize Cassette UI Controller
+      const ui = new CassetteUI(syncEngine, player);
+      ui.init();
+
+      // 4. Initialize Embedded Admin Section below player
+      const adminSection = new AdminSectionController(syncEngine, player, ui);
+      await adminSection.init();
+
+      // Pre-cue current DJ broadcast track
+      syncEngine.on('ready', (state) => {
+        if (state.track) {
+          player.playTrackAt(state.track.id, state.offsetSeconds);
+          if (!state.isPlaying) {
+            player.pause();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
